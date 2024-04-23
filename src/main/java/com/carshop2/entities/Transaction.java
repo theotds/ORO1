@@ -27,20 +27,4 @@ public class Transaction {
     public Transaction() {
 
     }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setPart(Part part) {
-        this.part = part;
-    }
-
-    public Part getPart() {
-        return part;
-    }
 }

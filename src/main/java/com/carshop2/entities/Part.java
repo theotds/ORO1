@@ -35,10 +35,6 @@ public class Part {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public String getName() {
         return name;
     }
@@ -47,27 +43,7 @@ public class Part {
         this.name = name;
     }
 
-    public double getPrice() {
-        return price;
-    }
-
     public void setPrice(double price) {
         this.price = price;
-    }
-
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
-    }
-
-    public Set<CarModel> getCarModels() {
-        return carModels;
-    }
-
-    public void setCarModels(Set<CarModel> carModels) {
-        this.carModels = carModels;
     }
 }

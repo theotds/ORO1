@@ -55,17 +55,9 @@ public class TransactionRepositoryTests {
         part2.setPrice(50.00);
         partRepository.save(part2);
 
-        Transaction transaction1 = new Transaction();
-        transaction1.setPart(part1);
-        transaction1.setUser(user1);
-
-        Transaction transaction2 = new Transaction();
-        transaction2.setPart(part2);
-        transaction2.setUser(user2);
-
-        Transaction transaction3 = new Transaction();
-        transaction3.setPart(part1);
-        transaction3.setUser(user2);
+        Transaction transaction1 = new Transaction(user1, part1);
+        Transaction transaction2 = new Transaction(user2, part2);
+        Transaction transaction3 = new Transaction(user2, part1);
 
         transactionRepository.save(transaction1);
         transactionRepository.save(transaction2);

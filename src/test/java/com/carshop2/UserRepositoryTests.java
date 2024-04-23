@@ -22,9 +22,12 @@ public class UserRepositoryTests {
 
     @BeforeEach
     public void setup() {
-        User user = new User();
-        user.setEmail("test@example.com");
+        User user = new User("test@example.com");
         userRepository.save(user);
+
+
+        User user2 = new User("test2@example.com");
+        userRepository.save(user2);
     }
 
     //Użytkownika według maila
@@ -32,6 +35,15 @@ public class UserRepositoryTests {
     public void whenFindByEmail_thenUserReturned() {
         // When
         Optional<User> foundUser = userRepository.findByEmail("test@example.com");
+
+        // Then
+        assertTrue(foundUser.isPresent(), "User should be present");
+    }
+
+    @Test
+    public void whenFindByEmail2_thenUserReturned() {
+        // When
+        Optional<User> foundUser = userRepository.findByEmail("test2@example.com");
 
         // Then
         assertTrue(foundUser.isPresent(), "User should be present");
