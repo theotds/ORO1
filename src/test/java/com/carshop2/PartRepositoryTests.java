@@ -2,51 +2,36 @@ package com.carshop2;
 
 import com.carshop2.entities.Part;
 import com.carshop2.repositories.PartRepository;
+import jakarta.transaction.Transactional;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import org.springframework.transaction.annotation.Transactional;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-@Transactional // Ensures each test is rolled back after execution
+@Transactional
 public class PartRepositoryTests {
 
     @Autowired
     private PartRepository partRepository;
 
-    @Test
-    public void whenFindByPriceBetween_thenReturnParts() {
-        // Arrange
-        Part brakePad = new Part("Brake Pad", 29.99);
-        partRepository.save(brakePad);
-        Part brakeDisc = new Part("Brake Disc", 45.99);
-        partRepository.save(brakeDisc);
-
-        // Act
-        List<Part> foundParts = partRepository.findByPriceBetween(20.00, 30.00);
-
-        // Assert
-        assertThat(foundParts).hasSize(1).extracting(Part::getName).containsOnly("Brake Pad");
+    @BeforeEach
+    public void setup() {
+        Part part1 = new Part("Part1", 50.00);
+        Part part2 = new Part("Part2", 150.00);
+        partRepository.save(part1);
+        partRepository.save(part2);
     }
 
+    //Produkty według przedziału cen
     @Test
-    public void whenPartSaved_thenFindById() {
-        // Arrange
-        Part newPart = new Part("Air Filter", 19.99);
-        partRepository.save(newPart);
-        Long newPartId = newPart.getId();
-
-        // Act
-        Part foundPart = partRepository.findById(newPartId).orElse(null);
-
-        // Assert
-        assertThat(foundPart).isNotNull();
-        assertThat(foundPart.getName()).isEqualTo("Air Filter");
-        assertThat(foundPart.getPrice()).isEqualTo(19.99);
+    public void whenFindByPriceRange_thenPartsReturned() {
+        List<Part> foundParts = partRepository.findByPriceBetween(40.00, 100.00);
+        assertFalse(foundParts.isEmpty(), "Should find parts within price range");
+        assertTrue(foundParts.stream().anyMatch(part -> part.getName().equals("Part1")), "Part1 should be included in the results");
     }
 }

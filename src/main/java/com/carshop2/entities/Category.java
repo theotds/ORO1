@@ -14,4 +14,12 @@ public class Category {
 
     @OneToMany(mappedBy = "category")
     private Set<Part> parts = new HashSet<>();
+
+    public Category(String name) {
+        this.name = name;
+    }
+
+    public Category() {
+
+    }
 }
